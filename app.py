@@ -25,6 +25,7 @@ def update_plot(value):
     plot = create_plot(value)
     return plot
 
+
 paragraf = pn.pane.HTML(
     """
     <h1>Realisasi Inflow Danau Poso</h1>
@@ -39,6 +40,7 @@ layout = pn.Column(
     '# Plotly Plot with Slider',
     slider,
     update_plot,
+    paragraf
 )
 
 # Menyajikan aplikasi
