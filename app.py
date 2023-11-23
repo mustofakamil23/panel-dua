@@ -1,22 +1,37 @@
 import panel as pn
-# from flask import Flask, render_template
-#
-# flask_app = Flask(__name__)
+import plotly.express as px
+import numpy as np
 
 
-# @flask_app.route('/app')
-# def hello_world():
-#     return render_template("index.html")
-#
-
-def panel_app():
-    return pn.Column('Hello Panel')  # This Panel app runs alongside flask, access the flask app at [here](./flask/app)"
+pn.extension('plotly')
 
 
-def user():
-    return pn.Column('Ini Halaman Untuk User')
+# Fungsi untuk membuat plot Plotly
+def create_plot(value):
+    x = np.linspace(0, 10, 100)
+    y = np.sin(value * x)
+    df = {"x": x, "y": y}
+    fig = px.line(df, x='x', y='y', title=f'Sin({value} * x)')
+    return fig
 
 
-# pn.serve({'/flask': flask_app, '/': panel_app}, port=8080)
-pn.serve({"/": panel_app, "user": user})
+# Membuat widget slider
+slider = pn.widgets.FloatSlider(name='Frequency', start=1, end=5, value=1)
 
+
+# Membuat panel dengan plot Plotly dan slider
+@pn.depends(slider.param.value)
+def update_plot(value):
+    plot = create_plot(value)
+    return plot
+
+
+# Membuat layout
+layout = pn.Column(
+    '# Plotly Plot with Slider',
+    slider,
+    update_plot,
+)
+
+# Menyajikan aplikasi
+layout.servable()
