@@ -25,6 +25,14 @@ def update_plot(value):
     plot = create_plot(value)
     return plot
 
+paragraf = pn.pane.HTML(
+    """
+    <h1>Realisasi Inflow Danau Poso</h1>
+    <p>\Forecast inflow rata-rata danau poso menggunakan algoritma Extream
+    Gradient Booting atau disingkat XGBoost, Xgboost adalah algoritma yang cukup
+     Baik yang bisa digunakan untuk data regresi dan time series</p>
+    """
+)
 
 # Membuat layout
 layout = pn.Column(
